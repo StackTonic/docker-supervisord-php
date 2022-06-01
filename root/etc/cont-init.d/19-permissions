@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+# permissions
+chown -R app:app \
+    /config /run/supervisord
+chmod g+w -R \
+    /config/supervisord /run/supervisord

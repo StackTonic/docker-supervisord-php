@@ -1,0 +1,10 @@
+[supervisord]
+nodaemon=true
+user=app
+logfile=/run/supervisord/supervisord.log
+pidfile = /run/supervisord/supervisord.pid
+logfile_maxbytes = 0
+strip_ansi = true
+
+[include]
+files = /config/supervisord/conf.d/*.conf

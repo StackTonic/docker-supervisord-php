@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+# create local php.ini if it doesn't exist, set local timezone
+[[ ! -f /config/php/php-local.ini ]] && \
+    printf "; Edit this file to override php.ini directives and restart the container\\n\\ndate.timezone = %s\\n" "$TZ" > /config/php/php-local.ini
+
+# copy user php-local.ini to image
+cp /config/php/php-local.ini /etc/php${PHP_VERSION}/conf.d/php-local.ini
+
+# create override for www.conf if it doesn't exist
+[[ ! -f /config/php/www.conf ]] 
+    printf '[www]
+user=app
+group=app
+listen=9000
+listen.owner = app
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+access.log=/proc/self/fd/2
+catch_workers_output = yes
+clear_env=no' > /config/php/www.conf

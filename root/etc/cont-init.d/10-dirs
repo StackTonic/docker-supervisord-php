@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# make folders
+mkdir -p \
+    /config/supervisord \
+    /config/php \
+    /run/supervisord \
+    /run/php

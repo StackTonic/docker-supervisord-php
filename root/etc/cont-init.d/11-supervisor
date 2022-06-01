@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# copy default config files if they don't exist
+[[ ! -f /config/supervisord/supervisord.conf ]] 
+    cp /defaults/supervisord/supervisord.conf.sample /config/supervisord/supervisord.conf
+    mkdir /config/supervisord/conf.d
+
+
