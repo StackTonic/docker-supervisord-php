@@ -57,6 +57,8 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
     php${PHP_VERSION}-xsl \
     php${PHP_VERSION}-zip \
     php${PHP_VERSION}-zlib \
+    php${PHP_VERSION}-pecl-oauth \
+    
     # Iconv Fix
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted php${PHP_VERSION}-pecl-apcu \
     && ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
