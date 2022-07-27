@@ -7,9 +7,11 @@ RUN  apk add --no-cache supervisor && \
      rm -rf /tmp/*
 
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv \
+    # Add testing for XMLRPC
     && apk add -U --no-cache \
     # Packages
     tini \
+    php${PHP_VERSION}-pecl-apcu \
     php${PHP_VERSION} \
     php${PHP_VERSION}-common \
     php${PHP_VERSION}-dev \
@@ -61,8 +63,8 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
     php${PHP_VERSION}-pecl-oauth \
     php${PHP_VERSION}-simplexml \
     php${PHP_VERSION}-pecl-igbinary \
-    php${PHP_VERSION}-pecl-xmlrpc \
-    # Iconv Fix
+    # Untrusted?
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted php${PHP_VERSION}-pecl-xmlrpc \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted php${PHP_VERSION}-pecl-apcu \
     && ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
     
