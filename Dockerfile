@@ -1,6 +1,9 @@
-FROM ghcr.io/stacktonic/alpine:v0.0.2
+ARG BASE_REPOSITORY_URL=harbor.stacktonic.com.au
+ARG BASE_IMAGE_NAME=stacktonic/alpine
+ARG BASE_IMAGE_TAG=latest
+FROM ${BASE_REPOSITORY_URL}/${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
-ARG PHP_VERSION=8
+ARG PHP_VERSION=81
 ENV PHP_VERSION $PHP_VERSION
 
 RUN  apk add --no-cache supervisor && \
@@ -29,7 +32,6 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
     php${PHP_VERSION}-pear \
     php${PHP_VERSION}-pecl-apcu \
     php${PHP_VERSION}-pecl-redis \
-    php${PHP_VERSION}-pecl-oauth \
     php${PHP_VERSION}-pgsql \
     php${PHP_VERSION}-posix \
     php${PHP_VERSION}-soap \
@@ -60,13 +62,13 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
     php${PHP_VERSION}-xsl \
     php${PHP_VERSION}-zip \
     php${PHP_VERSION}-zlib \
-    php${PHP_VERSION}-pecl-oauth \
+    #php${PHP_VERSION}-pecl-oauth \
     php${PHP_VERSION}-simplexml \
     php${PHP_VERSION}-pecl-igbinary \
     # Untrusted?
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted php${PHP_VERSION}-pecl-xmlrpc \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted php${PHP_VERSION}-pecl-apcu \
-    && ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
+    && if [ ! -L /usr/bin/php ] && [ ! -e /usr/bin/php ]; then ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php; fi
     
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
