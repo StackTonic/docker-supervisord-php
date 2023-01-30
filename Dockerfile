@@ -59,6 +59,7 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
     php${PHP_VERSION}-sysvshm \
     php${PHP_VERSION}-tokenizer \
     php${PHP_VERSION}-xml \
+    php${PHP_VERSION}-xmlwriter \
     php${PHP_VERSION}-xsl \
     php${PHP_VERSION}-zip \
     php${PHP_VERSION}-zlib \
